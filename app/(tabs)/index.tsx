@@ -7,6 +7,7 @@ export default function Index() {
   const {signOut}= useAuth()
   const handleAuth = ()=>{
     router.push("/auth")
+    
   }
 
   return (
