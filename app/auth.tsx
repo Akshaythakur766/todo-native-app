@@ -11,6 +11,8 @@ export default function AuthScreen() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>("");
+
+
   const handleSwitchMode = () => {
     setIsSignUp((prev) => !prev);
   };
