@@ -5,11 +5,11 @@ import { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { ID } from "react-native-appwrite";
 import {
-    Button,
-    SegmentedButtons,
-    Text,
-    TextInput,
-    useTheme,
+  Button,
+  SegmentedButtons,
+  Text,
+  TextInput,
+  useTheme,
 } from "react-native-paper";
 
 const FREQUENCIES = ["daily", "weekly", "monthly"];
@@ -55,8 +55,8 @@ export const AddHabitScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput label={"Title"} mode="outlined" style={styles.input} />
-      <TextInput label={"Description"} mode="outlined" style={styles.input} />
+      <TextInput label={"Title"} value={title} onChangeText={setTitle} mode="outlined" style={styles.input} />
+      <TextInput label={"Description"} value={description} onChangeText={setDescription} mode="outlined" style={styles.input} />
       <View style={styles.frequencyContainer}>
         <SegmentedButtons
           value={frequency}
