@@ -26,9 +26,9 @@ export default function Index() {
 
   useEffect(() => {
     if (user) {
-      const channel = `databases.${DATABASE_ID}.collections.${HABITS_COLLECTION_ID}.documents`;
+      const habitsChannel = `databases.${DATABASE_ID}.collections.${HABITS_COLLECTION_ID}.documents`;
       const habistSubscription = client.subscribe(
-        channel,
+        habitsChannel,
         (response: RealtimeResponse) => {
           if (
             response.events.includes(
@@ -51,13 +51,30 @@ export default function Index() {
           }
         }
       );
+      const subscriptionChannel = `databases.${DATABASE_ID}.collections.${HABITS_COLLECTION_ID}.documents`;
+      const completionSubscription = client.subscribe(
+        subscriptionChannel,
+        (response: RealtimeResponse) => {
+          if (
+            response.events.includes(
+              "databases.*.collections.*.documents.*.create"
+            )
+          ) {
+            fetchTodayCompletions();
+          }
+        }
+      );
       fetchHabits();
       fetchTodayCompletions()
       return () => {
         habistSubscription();
+        completionSubscription()
       };
     }
   }, [user]);
+
+  const isHabitCompleted = (habitId:string)=>
+    completedHabits?.includes(habitId)
 
   const fetchHabits = async () => {
     try {

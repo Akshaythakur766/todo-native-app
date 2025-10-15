@@ -9,3 +9,10 @@ export interface Habits extends Models.Document {
   last_completed: string;
   $createdAt: string;
 }
+
+
+export interface HabitCompletions extends Models.Document {
+  habit_id:string
+  user_id:string
+  completed_at:string
+}
