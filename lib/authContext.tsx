@@ -3,10 +3,10 @@ import { ID, Models } from "react-native-appwrite";
 import { account } from "./appwrite";
 type AuthContextType = {
   user: Models.User<Models.Preferences> | null;
-  isLoadingUser:boolean
+  isLoadingUser: boolean
   signUp: (email: string, password: string) => Promise<string | null>;
   signIn: (email: string, password: string) => Promise<string | null>;
-  signOut:()=>Promise<void>
+  signOut: () => Promise<void>
 };
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -16,32 +16,32 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   );
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true)
 
-  useEffect(()=>{
+  useEffect(() => {
     getUser()
-  },[])
+  }, [])
 
-  const getUser = async ()=>{
+  const getUser = async () => {
     setIsLoadingUser(true)
     try {
-        const session = await account.get()
-        setUser(session)
+      const session = await account.get()
+      setUser(session)
     } catch (error) {
-        setUser(null)
+      setUser(null)
     }
-    finally{
-        setIsLoadingUser(false)
+    finally {
+      setIsLoadingUser(false)
     }
   }
 
-  const signOut = async () =>{
+  const signOut = async () => {
     try {
-        
-        await account.deleteSession("current")
-        setUser(null)
+
+      await account.deleteSession("current")
+      setUser(null)
     } catch (error) {
-        console.log(error)   
+      console.log(error)
     }
-    }
+  }
 
   const signIn = async (email: string, password: string) => {
     try {
@@ -69,7 +69,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
   return (
-    <AuthContext.Provider value={{user , signOut, isLoadingUser , signIn, signUp }}>
+    <AuthContext.Provider value={{ user, signOut, isLoadingUser, signIn, signUp }}>
       {children}
     </AuthContext.Provider>
   );
@@ -77,6 +77,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context == undefined) {
+    
     throw new Error("useAuth must be inside of the AuthProvider ");
   }
   return context;
