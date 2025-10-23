@@ -202,7 +202,7 @@ export default function Index() {
                   swipeableRefs.current[habit.$id]?.close();
                 }}
               >
-                <Surface key={key} style={styles.card} elevation={1}>
+                <Surface key={key} style={[styles.card , isHabitCompleted(habit.$id) && styles.cardCompleted ]} elevation={1}>
                   <View style={styles.cardContent}>
                     <Text style={styles.cardTitle}>{habit.title}</Text>
                     <Text style={styles.cardDescription}>
@@ -261,6 +261,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.08,
     shadowRadius: 8,
     elevation: 4,
+  },
+  cardCompleted:{
+    // backgroundColor: '#f7f2fa',
+    opacity:0.6
+
   },
   emptyState: { flex: 1, justifyContent: "center", alignItems: "center" },
   emptyStateText: {
