@@ -152,14 +152,17 @@ export default function Index() {
     );
   };
 
-  const renderRightActions = () => {
+  const renderRightActions = (habitId:string) => {
     return (
       <View style={styles.swipeShiftRight}>
-        <MaterialCommunityIcons
+        {
+          isHabitCompleted(habitId) ? <Text style={{color:"#fff"}}>Completed</Text>:
+          <MaterialCommunityIcons
           name="check-circle-outline"
           size={32}
           color={"#fff"}
-        />
+          />
+        }
       </View>
     );
   };
@@ -192,7 +195,7 @@ export default function Index() {
                 overshootLeft={false}
                 overshootRight={false}
                 renderLeftActions={renderLeftActions}
-                renderRightActions={renderRightActions}
+                renderRightActions={()=>renderRightActions(habit?.$id)}
                 onSwipeableOpen={(direction) => {
                   if (direction == "left") {
                     handleDeleteHabit(habit?.$id);
